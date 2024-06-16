@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data from BXV Mesonet</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', sans-serif; 
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .data {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data from BXV Mesonet</h1>
+    <div id="data" class="data"></div>
+
+    <script>
+        async function fetchData() {
+            const response = await fetch('/data');
+            const data = await response.json();
+            
+            const windSpeed = data.windSpeed;
+            const windDirection = data.windDirection;
+            const timestamp = new Date(data.timestamp).toLocaleString();
+
+            document.getElementById('data').innerHTML = `
+                <p><strong>Wind Speed:</strong> ${windSpeed}</p>
+                <p><strong>Wind Direction:</strong> ${windDirection}</p>
+                <p><strong>Timestamp:</strong> ${timestamp}</p>
+            `;
+        }
+
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
